@@ -1,8 +1,14 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { HashRouter, Routes, Route, Link } from "react-router";
 import { motion } from "motion/react";
 import { JournalPage } from "./components/JournalPage";
 import { ArticlePage } from "./components/ArticlePage";
+import { ServicesPage } from "./components/ServicesPage";
+import { AboutPage } from "./components/AboutPage";
+import { ContactPage } from "./components/ContactPage";
+import { SiteNav } from "./components/SiteNav";
+import { SiteFooter } from "./components/SiteFooter";
+import { ContactForm } from "./components/ContactForm";
 
 // Figma assets
 import svgPaths from "../imports/UnnamedComponent/svg-7nkmr6yfuj";
@@ -10,8 +16,6 @@ import imgValuesSection from "../imports/UnnamedComponent/f91eaf332ee4a10ec058e6
 import imgArticle1 from "../imports/UnnamedComponent/bdb30674ad958933f85288ea31822252e1a378d0.png";
 import imgArticle2 from "../imports/UnnamedComponent/2b1a9f5d4045456ed370a4a05c8bf47cdc6d24e5.png";
 import imgArticle3 from "../imports/UnnamedComponent/92bc57b6c6836a6befe8825fe9548237096b97fe.png";
-import imgFooterImage from "../imports/UnnamedComponent/8a11dbd39aae785f584a7792193df8a4ee8851bd.png";
-import imgLogo from "../imports/Desktop/1461d062a4df53a899d6f6a3b764b1d786b4b24c.png";
 
 // ─── Design tokens ────────────────────────────────────────────────────────────
 const GRN = "#104101";
@@ -40,24 +44,31 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } 
 const viewOpts = { once: true, margin: "-80px" };
 
 // ─── Reusable button components ───────────────────────────────────────────────
+// href starting with "/" routes via react-router; anything else (e.g. "#contact")
+// stays a plain same-page anchor.
 function BtnPrimary({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <a href={href}
-      className="inline-flex items-center justify-center gap-2 px-6 py-4 hover:opacity-85 transition-opacity"
-      style={{ background: GRN, fontFamily: T.mono, fontSize: "14px", fontWeight: 500, color: "#fff" }}>
+  const cls = "inline-flex items-center justify-center gap-2 px-6 py-4 hover:opacity-85 transition-opacity";
+  const style = { background: GRN, fontFamily: T.mono, fontSize: "14px", fontWeight: 500, color: "#fff" };
+  const content = (
+    <>
       <span className="w-1 h-1 rounded-full bg-white inline-block shrink-0" />
       {children}
-    </a>
+    </>
+  );
+  return href.startsWith("/") ? (
+    <Link to={href} className={cls} style={style}>{content}</Link>
+  ) : (
+    <a href={href} className={cls} style={style}>{content}</a>
   );
 }
 
 function BtnOutline({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <a href={href}
-      className="inline-flex items-center justify-center px-6 py-4 hover:opacity-70 transition-opacity"
-      style={{ border: `1.5px solid ${GRN}`, fontFamily: T.mono, fontSize: "14px", fontWeight: 500, color: GRN }}>
-      {children} →
-    </a>
+  const cls = "inline-flex items-center justify-center px-6 py-4 hover:opacity-70 transition-opacity";
+  const style = { border: `1.5px solid ${GRN}`, fontFamily: T.mono, fontSize: "14px", fontWeight: 500, color: GRN };
+  return href.startsWith("/") ? (
+    <Link to={href} className={cls} style={style}>{children} →</Link>
+  ) : (
+    <a href={href} className={cls} style={style}>{children} →</a>
   );
 }
 
@@ -78,98 +89,6 @@ function SectionHeader({ kicker, heading, sub, center = true }: { kicker: string
         </motion.p>
       )}
     </motion.div>
-  );
-}
-
-// ─── Nav ──────────────────────────────────────────────────────────────────────
-function Nav() {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [logoGrey, setLogoGrey] = useState(0);
-  const navRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    function update() {
-      const y = window.scrollY;
-      setScrolled(y > 80);
-      const gradEl = document.querySelector('[data-name="Gradient background"]');
-      const navH = navRef.current?.getBoundingClientRect().height ?? 80;
-      if (gradEl) {
-        const gradBottom = gradEl.getBoundingClientRect().bottom;
-        setLogoGrey(1 - Math.min(1, Math.max(0, (gradBottom - navH) / (navH * 5))));
-      } else {
-        setLogoGrey(Math.min(1, Math.max(0, (y - 60) / 400)));
-      }
-    }
-    window.addEventListener("scroll", update, { passive: true });
-    update();
-    return () => window.removeEventListener("scroll", update);
-  }, []);
-
-  const links = [
-    { label: "Home", href: "#home" },
-    { label: "Explore Services", href: "#services-overview" },
-    { label: "About", href: "#about" },
-    { label: "Journal", href: "#journal" },
-    { label: "Contact", href: "#contact" },
-  ];
-
-  return (
-    <nav ref={navRef}
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-10 py-4"
-      style={{
-        transition: "background 0.4s ease, backdrop-filter 0.4s ease",
-        backdropFilter: scrolled ? "blur(24px) saturate(160%)" : "none",
-        background: scrolled ? "rgba(255,255,255,0.45)" : "rgba(255,255,255,0)",
-      }}>
-      <img src={imgLogo} alt="VisiWise" className="h-20 w-auto object-contain"
-        style={{ transition: "filter 0.4s ease", filter: `grayscale(${logoGrey}) brightness(${1 - logoGrey * 0.55})` }} />
-
-      {/* Desktop */}
-      <div className="hidden md:flex items-center gap-7">
-        {links.map((l) => (
-          <a key={l.label} href={l.href}
-            className="hover:opacity-60 transition-opacity"
-            style={{ fontFamily: T.display, fontWeight: 500, fontSize: "16px", color: GRN }}>
-            {l.label}
-          </a>
-        ))}
-        <a href="#contact"
-          className="px-5 py-2.5 hover:opacity-85 transition-opacity"
-          style={{ background: GRN, fontFamily: T.display, fontSize: "16px", fontWeight: 500, color: YLW }}>
-          Book a Call →
-        </a>
-      </div>
-
-      {/* Mobile toggle */}
-      <button className="md:hidden p-2" onClick={() => setOpen(!open)} aria-label="Toggle menu">
-        {[0, 1, 2].map((i) => (
-          <span key={i} className="block h-0.5 w-6 mb-1.5 last:mb-0 transition-all duration-300"
-            style={{
-              background: GRN,
-              transform: open && i === 0 ? "rotate(45deg) translate(4px,4px)" : open && i === 2 ? "rotate(-45deg) translate(4px,-4px)" : "",
-              opacity: open && i === 1 ? 0 : 1,
-            }} />
-        ))}
-      </button>
-
-      {open && (
-        <div className="absolute top-full left-0 right-0 flex flex-col gap-4 px-6 py-6 shadow-lg"
-          style={{ background: "rgba(255,255,255,0.97)", backdropFilter: "blur(32px)" }}>
-          {links.map((l) => (
-            <a key={l.label} href={l.href} onClick={() => setOpen(false)}
-              style={{ fontFamily: T.display, fontWeight: 500, fontSize: "20px", color: GRN }}>
-              {l.label}
-            </a>
-          ))}
-          <a href="#contact" onClick={() => setOpen(false)}
-            className="flex items-center justify-center py-3 mt-2"
-            style={{ background: GRN, fontFamily: T.display, fontSize: "16px", fontWeight: 500, color: YLW }}>
-            Book a Call →
-          </a>
-        </div>
-      )}
-    </nav>
   );
 }
 
@@ -204,8 +123,8 @@ function Hero() {
 
               {/* CTAs */}
               <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-                <BtnPrimary href="#contact">Request a Free Audit</BtnPrimary>
-                <BtnOutline href="#services-overview">Explore Services</BtnOutline>
+                <BtnPrimary href="/contact">Request a Free Audit</BtnPrimary>
+                <BtnOutline href="/services">Explore Services</BtnOutline>
               </motion.div>
             </motion.div>
 
@@ -251,7 +170,7 @@ function Hero() {
                 </motion.div>
               ))}
               <motion.div variants={fadeUp} className="mt-6">
-                <BtnPrimary href="#services-overview">Explore Services</BtnPrimary>
+                <BtnPrimary href="/services">Explore Services</BtnPrimary>
               </motion.div>
             </motion.div>
           </div>
@@ -301,11 +220,11 @@ function ServicesOverview() {
               <p style={{ fontFamily: T.serif, fontSize: "17px", color: GRY, lineHeight: 1.6, letterSpacing: "-0.02em", flex: 1 }}>
                 {s.desc}
               </p>
-              <a href="#contact"
+              <Link to="/services"
                 className="flex items-center gap-1 hover:gap-2 transition-all"
                 style={{ fontFamily: T.mono, fontSize: "13px", fontWeight: 500, color: GRN }}>
                 Learn more →
-              </a>
+              </Link>
             </motion.div>
           ))}
         </motion.div>
@@ -404,7 +323,7 @@ function Pricing() {
                   </li>
                 ))}
               </ul>
-              <a href="#contact"
+              <Link to="/contact"
                 className="flex items-center justify-center py-3 mt-2 hover:opacity-85 transition-opacity"
                 style={{
                   background: p.popular ? YLW : "transparent",
@@ -413,7 +332,7 @@ function Pricing() {
                   color: p.popular ? GRN : GRN,
                 }}>
                 {p.cta === "primary" ? "Get Started" : "Get Started →"}
-              </a>
+              </Link>
             </motion.div>
           ))}
         </motion.div>
@@ -449,6 +368,13 @@ function WhoWeServe() {
               {ind}
             </motion.span>
           ))}
+        </motion.div>
+        <motion.div initial="hidden" whileInView="visible" viewport={viewOpts} variants={fadeUp}>
+          <Link to="/about"
+            className="flex items-center gap-1 hover:gap-2 transition-all"
+            style={{ fontFamily: T.mono, fontSize: "13px", fontWeight: 500, color: GRN }}>
+            Learn more about us →
+          </Link>
         </motion.div>
       </div>
     </section>
@@ -587,27 +513,6 @@ function IconInstagram() {
 }
 
 function Contact() {
-  const [form, setForm] = useState({
-    name: "", business: "", email: "", phone: "",
-    businessType: "", improve: [] as string[], message: "",
-  });
-  const [sent, setSent] = useState(false);
-
-  const improveOptions = ["Website", "Social Media", "SEO", "Email Marketing", "LinkedIn", "Software / Tools", "Strategy", "Not sure yet"];
-
-  function toggleImprove(opt: string) {
-    setForm((p) => ({
-      ...p,
-      improve: p.improve.includes(opt) ? p.improve.filter((x) => x !== opt) : [...p.improve, opt],
-    }));
-  }
-
-  const inputStyle: React.CSSProperties = {
-    border: `1px solid ${BDR}`, background: "#fff",
-    fontFamily: T.mono, fontSize: "14px", color: GRN,
-    outline: "none", width: "100%", padding: "12px 16px",
-  };
-
   return (
     <section id="contact" className="relative w-full py-20 md:py-28 px-6 md:px-10" style={{ background: BGS }}>
       <div className="max-w-6xl mx-auto flex flex-col gap-12">
@@ -641,7 +546,7 @@ function Contact() {
                 </li>
               ))}
             </ul>
-            <BtnPrimary href="#">Schedule a Free Audit Call</BtnPrimary>
+            <BtnPrimary href="/contact">Schedule a Free Audit Call</BtnPrimary>
             <div className="flex items-center gap-4">
               <div style={{ flex: 1, height: "1px", background: BDR }} />
               <span style={{ fontFamily: T.serif, fontSize: "14px", color: GRY }}>or send a message to</span>
@@ -655,88 +560,7 @@ function Contact() {
           <motion.div variants={fadeUp}
             className="flex flex-col gap-5 p-8 rounded-2xl bg-white"
             style={{ border: `1px solid ${BDR}` }}>
-            {sent ? (
-              <div className="flex flex-col items-center gap-5 py-12">
-                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                  <circle cx="24" cy="24" r="23" stroke={GRN} strokeWidth="2" />
-                  <path d="M14 24l8 8 12-16" stroke={GRN} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                <h3 style={{ fontFamily: T.display, fontWeight: 500, fontSize: "22px", color: GRN }}>Message received!</h3>
-                <p style={{ fontFamily: T.serif, fontSize: "16px", color: GRY }}>We'll respond within 24 hours on business days.</p>
-              </div>
-            ) : (
-              <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="flex flex-col gap-4">
-                <div className="flex flex-col gap-1">
-                  <h3 style={{ fontFamily: T.display, fontWeight: 500, fontSize: "20px", color: GRN, letterSpacing: "-0.4px" }}>
-                    Send us a message.
-                  </h3>
-                  <p style={{ fontFamily: T.serif, fontSize: "14px", color: GRY }}>We respond within 24 hours on business days.</p>
-                </div>
-
-                <div className="grid sm:grid-cols-2 gap-4">
-                  {[{ id: "name", label: "Your name *", placeholder: "Jane Smith" }, { id: "business", label: "Business name *", placeholder: "Acme Inc" }].map((f) => (
-                    <div key={f.id} className="flex flex-col gap-1.5">
-                      <label htmlFor={f.id} style={{ fontFamily: T.display, fontWeight: 500, fontSize: "14px", color: GRN }}>{f.label}</label>
-                      <input id={f.id} type="text" required placeholder={f.placeholder}
-                        value={(form as any)[f.id]}
-                        onChange={(e) => setForm((p) => ({ ...p, [f.id]: e.target.value }))}
-                        style={inputStyle} />
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="email" style={{ fontFamily: T.display, fontWeight: 500, fontSize: "14px", color: GRN }}>Email address *</label>
-                  <input id="email" type="email" required placeholder="jane@acme.com"
-                    value={form.email} onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
-                    style={inputStyle} />
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="phone" style={{ fontFamily: T.display, fontWeight: 500, fontSize: "14px", color: GRN }}>
-                    Phone <span style={{ color: GRY, fontWeight: 400 }}>(optional)</span>
-                  </label>
-                  <input id="phone" type="tel" placeholder="(602) 555-0100"
-                    value={form.phone} onChange={(e) => setForm((p) => ({ ...p, phone: e.target.value }))}
-                    style={inputStyle} />
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="businessType" style={{ fontFamily: T.display, fontWeight: 500, fontSize: "14px", color: GRN }}>What best describes your business?</label>
-                  <select id="businessType" value={form.businessType}
-                    onChange={(e) => setForm((p) => ({ ...p, businessType: e.target.value }))}
-                    style={{ ...inputStyle, cursor: "pointer" }}>
-                    <option value="">Select one...</option>
-                    {["Law Firm", "Healthcare Practice", "Real Estate", "Financial Services", "Construction / Trades", "Consulting & Coaching", "Other"].map((o) => (
-                      <option key={o} value={o}>{o}</option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="flex flex-col gap-2">
-                  <label style={{ fontFamily: T.display, fontWeight: 500, fontSize: "14px", color: GRN }}>What are you looking to improve?</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {improveOptions.map((opt) => (
-                      <label key={opt} className="flex items-center gap-2 cursor-pointer"
-                        style={{ fontFamily: T.mono, fontSize: "13px", color: GRN }}>
-                        <input type="checkbox" checked={form.improve.includes(opt)} onChange={() => toggleImprove(opt)}
-                          style={{ accentColor: GRN }} />
-                        {opt}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="message" style={{ fontFamily: T.display, fontWeight: 500, fontSize: "14px", color: GRN }}>Tell us a bit more</label>
-                  <textarea id="message" rows={4} placeholder="What's your biggest digital challenge right now?"
-                    value={form.message} onChange={(e) => setForm((p) => ({ ...p, message: e.target.value }))}
-                    style={{ ...inputStyle, resize: "none", fontFamily: T.serif, fontSize: "15px", lineHeight: 1.5 }} />
-                </div>
-
-                <BtnPrimary href="#">Send Message</BtnPrimary>
-              </form>
-            )}
+            <ContactForm />
           </motion.div>
         </motion.div>
 
@@ -773,107 +597,11 @@ function CTABanner() {
           sub="Book a free 30-minute digital audit. We'll look at your current presence and tell you exactly what's working, what's not, and what to fix first." />
         <motion.div initial="hidden" whileInView="visible" viewport={viewOpts} variants={fadeUp}
           className="flex flex-col sm:flex-row gap-3">
-          <BtnPrimary href="#contact">Book a Free Audit</BtnPrimary>
-          <BtnOutline href="#contact">Send Us a Message</BtnOutline>
+          <BtnPrimary href="/contact">Book a Free Audit</BtnPrimary>
+          <BtnOutline href="/contact">Send Us a Message</BtnOutline>
         </motion.div>
       </div>
     </section>
-  );
-}
-
-// ─── Footer ───────────────────────────────────────────────────────────────────
-function Footer() {
-  return (
-    <footer className="relative w-full" style={{ background: GRN }}>
-      <div className="max-w-6xl mx-auto px-6 md:px-10 pt-16 pb-8 flex flex-col gap-12">
-
-        {/* Top row */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-          <div className="flex flex-col gap-3">
-            <img src={imgLogo} alt="VisiWise" className="h-40 w-auto object-left object-contain self-start"
-              style={{ filter: "brightness(0) invert(1)" }} />
-            <p style={{ fontFamily: T.serif, fontSize: "17px", color: "rgba(255,255,255,0.7)", letterSpacing: "-0.04em", lineHeight: 1.5 }}>
-              Digital Operations, Built for Business.
-            </p>
-            <p style={{ fontFamily: T.mono, fontSize: "13px", color: "rgba(255,255,255,0.5)" }}>
-              Serving clients across the US
-            </p>
-          </div>
-          <div className="flex flex-col gap-3 items-start md:items-end">
-            <a href="#contact"
-              className="inline-flex items-center gap-2 px-5 py-3 hover:opacity-85 transition-opacity"
-              style={{ background: YLW, fontFamily: T.mono, fontSize: "14px", fontWeight: 700, color: GRN }}>
-              Book a Free Audit →
-            </a>
-            <a href="mailto:visiwiseoptimization@gmail.com"
-              style={{ fontFamily: T.mono, fontSize: "13px", color: "rgba(255,255,255,0.6)", textDecoration: "underline" }}>
-              visiwiseoptimization@gmail.com
-            </a>
-          </div>
-        </div>
-
-        {/* Link columns */}
-        <div className="grid sm:grid-cols-2 gap-8">
-          <div className="flex flex-col gap-3">
-            <span style={{ fontFamily: T.mono, fontSize: "11px", color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Services</span>
-            {["Full Digital Marketing", "Analysis & Reporting", "Software Solutions"].map((l) => (
-              <a key={l} href="#services-overview"
-                className="hover:opacity-60 transition-opacity w-fit"
-                style={{ fontFamily: T.display, fontWeight: 500, fontSize: "16px", color: YLW }}>
-                {l}
-              </a>
-            ))}
-          </div>
-          <div className="flex flex-col gap-3">
-            <span style={{ fontFamily: T.mono, fontSize: "11px", color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Company</span>
-            {[{ label: "About", href: "#about" }, { label: "Journal", href: "#journal" }, { label: "Contact", href: "#contact" }].map((l) => (
-              <a key={l.label} href={l.href}
-                className="hover:opacity-60 transition-opacity w-fit"
-                style={{ fontFamily: T.display, fontWeight: 500, fontSize: "16px", color: YLW }}>
-                {l.label}
-              </a>
-            ))}
-          </div>
-        </div>
-
-        {/* Social + copyright */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-6"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.15)" }}>
-          <div className="flex items-center gap-5">
-            <a href="https://linkedin.com/company/visiwise" aria-label="LinkedIn" className="hover:opacity-60 transition-opacity">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill={YLW}/>
-                <path d="M7 9.5H5V19H7V9.5Z" fill={GRN}/>
-                <circle cx="6" cy="7" r="1.25" fill={GRN}/>
-                <path d="M13 12.5C13 11.4 13.9 10.5 15 10.5C16.1 10.5 17 11.4 17 12.5V19H19V12.5C19 10.3 17.2 8.5 15 8.5C13.8 8.5 12.7 9 12 9.9V9.5H10V19H12V12.5H13Z" fill={GRN}/>
-              </svg>
-            </a>
-            <a href="#" aria-label="Facebook" className="hover:opacity-60 transition-opacity">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill={YLW}/>
-                <path d="M13 19V13H15L15.5 11H13V9.5C13 8.9 13.3 8.5 14.2 8.5H15.5V6.7C15.2 6.7 14.5 6.5 13.5 6.5C11.6 6.5 10.5 7.6 10.5 9.3V11H9V13H10.5V19H13Z" fill={GRN}/>
-              </svg>
-            </a>
-            <a href="https://instagram.com/visiwise.optimization" aria-label="Instagram" className="hover:opacity-60 transition-opacity">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill={YLW}/>
-                <rect x="5" y="5" width="14" height="14" rx="4" stroke={GRN} strokeWidth="1.5"/>
-                <circle cx="12" cy="12" r="3.25" stroke={GRN} strokeWidth="1.5"/>
-                <circle cx="16.2" cy="7.8" r="0.8" fill={GRN}/>
-              </svg>
-            </a>
-          </div>
-          <p style={{ fontFamily: T.mono, fontSize: "12px", color: "rgba(255,255,255,0.4)" }}>
-            © 2026 VisiWise Optimization LLC · All rights reserved
-          </p>
-        </div>
-
-        {/* Texture */}
-        <div aria-hidden className="h-20 mix-blend-luminosity opacity-15 relative w-full">
-          <img alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none" src={imgFooterImage} />
-        </div>
-      </div>
-    </footer>
   );
 }
 
@@ -888,7 +616,7 @@ function HomePage() {
 
   return (
     <div className="bg-white flex flex-col items-center relative w-full min-h-screen">
-      <Nav />
+      <SiteNav home active="/" />
       <Hero />
       <ServicesOverview />
       <Pricing />
@@ -897,7 +625,7 @@ function HomePage() {
       <Journal />
       <Contact />
       <CTABanner />
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }
@@ -908,6 +636,9 @@ export default function App() {
     <HashRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/services" element={<ServicesPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
         <Route path="/journal" element={<JournalPage />} />
         <Route path="/journal/:slug" element={<ArticlePage />} />
       </Routes>

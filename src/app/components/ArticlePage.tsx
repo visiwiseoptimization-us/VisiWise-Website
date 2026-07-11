@@ -2,94 +2,17 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router";
 import { motion } from "motion/react";
 import { getArticleBySlug, getRelatedArticles, ARTICLES } from "./articleData";
-import imgLogo from "../../imports/Desktop/1461d062a4df53a899d6f6a3b764b1d786b4b24c.png";
+import { SiteNav, GRN, YLW, GRY, BDR, BGS, T } from "./SiteNav";
+import { SiteFooter } from "./SiteFooter";
 import imgArticle1 from "../../imports/UnnamedComponent/bdb30674ad958933f85288ea31822252e1a378d0.png";
 import imgArticle2 from "../../imports/UnnamedComponent/2b1a9f5d4045456ed370a4a05c8bf47cdc6d24e5.png";
 import imgArticle3 from "../../imports/UnnamedComponent/92bc57b6c6836a6befe8825fe9548237096b97fe.png";
-import imgFooterImage from "../../imports/UnnamedComponent/8a11dbd39aae785f584a7792193df8a4ee8851bd.png";
-
-// ─── Design tokens ────────────────────────────────────────────────────────────
-const GRN = "#104101";
-const YLW = "#fdff4a";
-const GRY = "#6c6c6c";
-const BDR = "#dbe0ec";
-const BGS = "#f6f8fb";
-const T = {
-  serif: "'Source Serif 4', serif",
-  display: "'Radio Canada Big', sans-serif",
-  mono: "'Geist Mono', monospace",
-};
 
 const articleImages = [imgArticle1, imgArticle2, imgArticle3];
 
 function getArticleImage(slug: string): string {
   const idx = ARTICLES.findIndex((a) => a.slug === slug);
   return articleImages[idx % 3];
-}
-
-// ─── Nav ──────────────────────────────────────────────────────────────────────
-function Nav() {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 80);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const links = [
-    { label: "Home", href: "/" },
-    { label: "Explore Services", href: "/#services-overview" },
-    { label: "About", href: "/#about" },
-    { label: "Journal", href: "/journal" },
-    { label: "Contact", href: "/#contact" },
-  ];
-
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-10 py-4"
-      style={{ transition: "background 0.4s ease, backdrop-filter 0.4s ease", backdropFilter: scrolled ? "blur(24px) saturate(160%)" : "none", background: scrolled ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0)" }}>
-      <Link to="/">
-        <img src={imgLogo} alt="VisiWise" className="h-20 w-auto object-contain"
-          style={{ filter: scrolled ? "grayscale(1) brightness(0.45)" : "none", transition: "filter 0.4s ease" }} />
-      </Link>
-      <div className="hidden md:flex items-center gap-7">
-        {links.map((l) =>
-          l.href.startsWith("/") && !l.href.includes("#") ? (
-            <Link key={l.label} to={l.href} className="hover:opacity-60 transition-opacity"
-              style={{ fontFamily: T.display, fontWeight: 500, fontSize: "16px", color: GRN }}>
-              {l.label}
-            </Link>
-          ) : (
-            <a key={l.label} href={l.href} className="hover:opacity-60 transition-opacity"
-              style={{ fontFamily: T.display, fontWeight: 500, fontSize: "16px", color: GRN }}>
-              {l.label}
-            </a>
-          )
-        )}
-        <Link to="/#contact" className="px-5 py-2.5 hover:opacity-85 transition-opacity"
-          style={{ background: GRN, fontFamily: T.display, fontSize: "16px", fontWeight: 500, color: YLW }}>
-          Book a Call →
-        </Link>
-      </div>
-      <button className="md:hidden p-2" onClick={() => setOpen(!open)} aria-label="Toggle menu">
-        {[0, 1, 2].map((i) => (
-          <span key={i} className="block h-0.5 w-6 mb-1.5 last:mb-0 transition-all duration-300"
-            style={{ background: GRN, transform: open && i === 0 ? "rotate(45deg) translate(4px,4px)" : open && i === 2 ? "rotate(-45deg) translate(4px,-4px)" : "", opacity: open && i === 1 ? 0 : 1 }} />
-        ))}
-      </button>
-      {open && (
-        <div className="absolute top-full left-0 right-0 flex flex-col gap-4 px-6 py-6 shadow-lg"
-          style={{ background: "rgba(255,255,255,0.97)", backdropFilter: "blur(32px)" }}>
-          {links.map((l) => (
-            <a key={l.label} href={l.href} onClick={() => setOpen(false)}
-              style={{ fontFamily: T.display, fontWeight: 500, fontSize: "20px", color: GRN }}>{l.label}</a>
-          ))}
-        </div>
-      )}
-    </nav>
-  );
 }
 
 // ─── FAQ accordion ────────────────────────────────────────────────────────────
@@ -120,42 +43,6 @@ function FAQAccordion({ faqs }: { faqs: { q: string; a: string }[] }) {
   );
 }
 
-// ─── Footer ───────────────────────────────────────────────────────────────────
-function Footer() {
-  return (
-    <footer className="relative w-full" style={{ background: GRN }}>
-      <div className="max-w-6xl mx-auto px-6 md:px-10 pt-16 pb-8 flex flex-col gap-12">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-          <div className="flex flex-col gap-3">
-            <img src={imgLogo} alt="VisiWise" className="h-40 w-auto object-contain object-left self-start"
-              style={{ filter: "brightness(0) invert(1)" }} />
-            <p style={{ fontFamily: T.serif, fontSize: "17px", color: "rgba(255,255,255,0.7)", letterSpacing: "-0.04em" }}>Digital Operations, Built for Business.</p>
-            <p style={{ fontFamily: T.mono, fontSize: "13px", color: "rgba(255,255,255,0.5)" }}>Serving clients across the US</p>
-          </div>
-          <div className="flex flex-col gap-3 items-start md:items-end">
-            <Link to="/#contact" className="inline-flex items-center gap-2 px-5 py-3 hover:opacity-85 transition-opacity"
-              style={{ background: YLW, fontFamily: T.mono, fontSize: "14px", fontWeight: 700, color: GRN }}>
-              Book a Free Audit →
-            </Link>
-            <a href="mailto:visiwiseoptimization@gmail.com"
-              style={{ fontFamily: T.mono, fontSize: "13px", color: "rgba(255,255,255,0.6)", textDecoration: "underline" }}>
-              visiwiseoptimization@gmail.com
-            </a>
-          </div>
-        </div>
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-6"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.15)" }}>
-          <p style={{ fontFamily: T.mono, fontSize: "12px", color: "rgba(255,255,255,0.4)" }}>
-            © 2026 VisiWise Optimization LLC · All rights reserved
-          </p>
-        </div>
-        <div aria-hidden className="h-20 mix-blend-luminosity opacity-15 relative w-full">
-          <img alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none" src={imgFooterImage} />
-        </div>
-      </div>
-    </footer>
-  );
-}
 
 // ─── Article Page ─────────────────────────────────────────────────────────────
 export function ArticlePage() {
@@ -214,14 +101,14 @@ export function ArticlePage() {
   if (!article) {
     return (
       <div className="bg-white flex flex-col min-h-screen">
-        <Nav />
+        <SiteNav active="/journal" />
         <div className="flex-1 flex flex-col items-center justify-center gap-6 px-6 pt-32">
           <h1 style={{ fontFamily: T.display, fontWeight: 500, fontSize: "32px", color: GRN }}>Article not found</h1>
           <Link to="/journal" style={{ fontFamily: T.mono, fontSize: "14px", color: GRN, textDecoration: "underline" }}>
             ← Back to the journal
           </Link>
         </div>
-        <Footer />
+        <SiteFooter />
       </div>
     );
   }
@@ -230,7 +117,7 @@ export function ArticlePage() {
 
   return (
     <div className="bg-white flex flex-col min-h-screen">
-      <Nav />
+      <SiteNav active="/journal" />
 
       {/* Article header */}
       <header className="relative w-full pt-36 pb-10 px-6 md:px-10" style={{ background: BGS }}>
@@ -338,7 +225,7 @@ export function ArticlePage() {
             <p style={{ fontFamily: T.serif, fontSize: "17px", color: GRY, lineHeight: 1.6, maxWidth: "440px" }}>
               Book a free 30-minute audit. We'll review your digital presence and tell you exactly what to fix first.
             </p>
-            <Link to="/#contact"
+            <Link to="/contact"
               className="inline-flex items-center gap-2 px-6 py-4 hover:opacity-85 transition-opacity"
               style={{ background: GRN, fontFamily: T.mono, fontSize: "14px", fontWeight: 500, color: "#fff" }}>
               <span className="w-1 h-1 rounded-full bg-white inline-block shrink-0" />
@@ -382,7 +269,7 @@ export function ArticlePage() {
         </div>
       </article>
 
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }
