@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router";
 import { motion } from "motion/react";
-import { SiteNav, GRN, YLW, GRY, BDR, BGS, T } from "./SiteNav";
+import { SiteNav, GRN, YLW, GRY, BDR, BGS, T, BOOKING_URL } from "./SiteNav";
 import { SiteFooter } from "./SiteFooter";
 
 const fadeUp = {
@@ -141,12 +141,12 @@ export function ServicesPage() {
               </motion.p>
             </motion.div>
             <motion.div initial="hidden" whileInView="visible" viewport={viewOpts} variants={fadeUp} className="flex flex-col sm:flex-row gap-3">
-              <Link to="/contact"
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-6 py-4 hover:opacity-85 transition-opacity"
                 style={{ background: GRN, fontFamily: T.mono, fontSize: "14px", fontWeight: 500, color: "#fff" }}>
                 <span className="w-1 h-1 rounded-full bg-white inline-block shrink-0" />
                 Book a Free Audit
-              </Link>
+              </a>
               <Link to="/about"
                 className="inline-flex items-center justify-center px-6 py-4 hover:opacity-70 transition-opacity"
                 style={{ border: `1.5px solid ${GRN}`, fontFamily: T.mono, fontSize: "14px", fontWeight: 500, color: GRN }}>

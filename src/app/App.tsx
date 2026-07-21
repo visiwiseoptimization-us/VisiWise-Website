@@ -6,7 +6,7 @@ import { ArticlePage } from "./components/ArticlePage";
 import { ServicesPage } from "./components/ServicesPage";
 import { AboutPage } from "./components/AboutPage";
 import { ContactPage } from "./components/ContactPage";
-import { SiteNav } from "./components/SiteNav";
+import { SiteNav, BOOKING_URL } from "./components/SiteNav";
 import { SiteFooter } from "./components/SiteFooter";
 import { ContactForm } from "./components/ContactForm";
 
@@ -44,7 +44,8 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } 
 const viewOpts = { once: true, margin: "-80px" };
 
 // ─── Reusable button components ───────────────────────────────────────────────
-// href starting with "/" routes via react-router; anything else (e.g. "#contact")
+// href starting with "/" routes via react-router; "http(s)://" opens in a new
+// tab (external, e.g. the booking link); anything else (e.g. "#contact")
 // stays a plain same-page anchor.
 function BtnPrimary({ href, children }: { href: string; children: React.ReactNode }) {
   const cls = "inline-flex items-center justify-center gap-2 px-6 py-4 hover:opacity-85 transition-opacity";
@@ -55,20 +56,24 @@ function BtnPrimary({ href, children }: { href: string; children: React.ReactNod
       {children}
     </>
   );
-  return href.startsWith("/") ? (
-    <Link to={href} className={cls} style={style}>{content}</Link>
-  ) : (
-    <a href={href} className={cls} style={style}>{content}</a>
+  if (href.startsWith("/")) return <Link to={href} className={cls} style={style}>{content}</Link>;
+  const external = href.startsWith("http");
+  return (
+    <a href={href} className={cls} style={style} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+      {content}
+    </a>
   );
 }
 
 function BtnOutline({ href, children }: { href: string; children: React.ReactNode }) {
   const cls = "inline-flex items-center justify-center px-6 py-4 hover:opacity-70 transition-opacity";
   const style = { border: `1.5px solid ${GRN}`, fontFamily: T.mono, fontSize: "14px", fontWeight: 500, color: GRN };
-  return href.startsWith("/") ? (
-    <Link to={href} className={cls} style={style}>{children} →</Link>
-  ) : (
-    <a href={href} className={cls} style={style}>{children} →</a>
+  if (href.startsWith("/")) return <Link to={href} className={cls} style={style}>{children} →</Link>;
+  const external = href.startsWith("http");
+  return (
+    <a href={href} className={cls} style={style} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+      {children} →
+    </a>
   );
 }
 
@@ -123,7 +128,7 @@ function Hero() {
 
               {/* CTAs */}
               <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-                <BtnPrimary href="/contact">Request a Free Audit</BtnPrimary>
+                <BtnPrimary href={BOOKING_URL}>Request a Free Audit</BtnPrimary>
                 <BtnOutline href="/services">Explore Services</BtnOutline>
               </motion.div>
             </motion.div>
@@ -546,7 +551,7 @@ function Contact() {
                 </li>
               ))}
             </ul>
-            <BtnPrimary href="/contact">Schedule a Free Audit Call</BtnPrimary>
+            <BtnPrimary href={BOOKING_URL}>Schedule a Free Audit Call</BtnPrimary>
             <div className="flex items-center gap-4">
               <div style={{ flex: 1, height: "1px", background: BDR }} />
               <span style={{ fontFamily: T.serif, fontSize: "14px", color: GRY }}>or send a message to</span>
@@ -597,7 +602,7 @@ function CTABanner() {
           sub="Book a free 30-minute digital audit. We'll look at your current presence and tell you exactly what's working, what's not, and what to fix first." />
         <motion.div initial="hidden" whileInView="visible" viewport={viewOpts} variants={fadeUp}
           className="flex flex-col sm:flex-row gap-3">
-          <BtnPrimary href="/contact">Book a Free Audit</BtnPrimary>
+          <BtnPrimary href={BOOKING_URL}>Book a Free Audit</BtnPrimary>
           <BtnOutline href="/contact">Send Us a Message</BtnOutline>
         </motion.div>
       </div>

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router";
 import { motion } from "motion/react";
 import { getArticleBySlug, getRelatedArticles, ARTICLES } from "./articleData";
-import { SiteNav, GRN, YLW, GRY, BDR, BGS, T } from "./SiteNav";
+import { SiteNav, GRN, YLW, GRY, BDR, BGS, T, BOOKING_URL } from "./SiteNav";
 import { SiteFooter } from "./SiteFooter";
 import imgArticle1 from "../../imports/UnnamedComponent/bdb30674ad958933f85288ea31822252e1a378d0.png";
 import imgArticle2 from "../../imports/UnnamedComponent/2b1a9f5d4045456ed370a4a05c8bf47cdc6d24e5.png";
@@ -225,12 +225,12 @@ export function ArticlePage() {
             <p style={{ fontFamily: T.serif, fontSize: "17px", color: GRY, lineHeight: 1.6, maxWidth: "440px" }}>
               Book a free 30-minute audit. We'll review your digital presence and tell you exactly what to fix first.
             </p>
-            <Link to="/contact"
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-4 hover:opacity-85 transition-opacity"
               style={{ background: GRN, fontFamily: T.mono, fontSize: "14px", fontWeight: 500, color: "#fff" }}>
               <span className="w-1 h-1 rounded-full bg-white inline-block shrink-0" />
               Book a Free Audit
-            </Link>
+            </a>
           </div>
 
           {/* Related articles */}

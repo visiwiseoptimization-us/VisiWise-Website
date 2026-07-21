@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router";
 import { motion } from "motion/react";
-import { SiteNav, GRN, YLW, GRY, BDR, BGS, T } from "./SiteNav";
+import { SiteNav, GRN, YLW, GRY, BDR, BGS, T, BOOKING_URL } from "./SiteNav";
 import { SiteFooter } from "./SiteFooter";
 import imgPortrait from "../../imports/UnnamedComponent/f42c05dd2841492729d69d263e434fa89ac6612b.png";
 
@@ -159,11 +159,11 @@ export function AboutPage() {
               Let's see if we're a fit.
             </motion.h2>
             <motion.div initial="hidden" whileInView="visible" viewport={viewOpts} variants={fadeUp}>
-              <Link to="/contact"
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-6 py-4 hover:opacity-85 transition-opacity"
                 style={{ background: YLW, fontFamily: T.mono, fontSize: "14px", fontWeight: 700, color: GRN }}>
                 Book a Free Audit Call →
-              </Link>
+              </a>
             </motion.div>
           </div>
         </section>

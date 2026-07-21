@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { GRN, YLW, T } from "./SiteNav";
+import { GRN, YLW, T, BOOKING_URL } from "./SiteNav";
 import imgLogo from "../../imports/Desktop/1461d062a4df53a899d6f6a3b764b1d786b4b24c.png";
 import imgFooterImage from "../../imports/UnnamedComponent/8a11dbd39aae785f584a7792193df8a4ee8851bd.png";
 
@@ -49,13 +49,15 @@ export function SiteFooter() {
             <p style={{ fontFamily: T.mono, fontSize: "13px", color: "rgba(255,255,255,0.5)" }}>Serving clients across the US</p>
           </div>
           <div className="flex flex-col gap-3 items-start md:items-end">
-            <Link
-              to="/contact"
+            <a
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-3 hover:opacity-85 transition-opacity"
               style={{ background: YLW, fontFamily: T.mono, fontSize: "14px", fontWeight: 700, color: GRN }}
             >
               Book a Free Audit →
-            </Link>
+            </a>
             <a
               href="mailto:visiwiseoptimization@gmail.com"
               style={{ fontFamily: T.mono, fontSize: "13px", color: "rgba(255,255,255,0.6)", textDecoration: "underline" }}

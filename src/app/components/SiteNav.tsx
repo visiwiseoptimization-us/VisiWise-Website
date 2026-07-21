@@ -8,6 +8,10 @@ export const YLW = "#fdff4a";
 export const GRY = "#6c6c6c";
 export const BDR = "#dbe0ec";
 export const BGS = "#f6f8fb";
+
+// Google Calendar Appointment Schedule — 30-min free audit call booking page.
+export const BOOKING_URL = "https://calendar.app.google/6ZnoVugcdHveqTtR7";
+
 export const T = {
   serif: "'Source Serif 4', serif",
   display: "'Radio Canada Big', sans-serif",
@@ -90,13 +94,15 @@ export function SiteNav({ home = false, active }: { home?: boolean; active?: str
             {l.label}
           </Link>
         ))}
-        <Link
-          to="/contact"
+        <a
+          href={BOOKING_URL}
+          target="_blank"
+          rel="noopener noreferrer"
           className="px-5 py-2.5 hover:opacity-85 transition-opacity"
           style={{ background: GRN, fontFamily: T.display, fontSize: "16px", fontWeight: 500, color: YLW }}
         >
           Book a Call →
-        </Link>
+        </a>
       </div>
 
       {/* Mobile toggle */}
@@ -124,14 +130,16 @@ export function SiteNav({ home = false, active }: { home?: boolean; active?: str
               {l.label}
             </Link>
           ))}
-          <Link
-            to="/contact"
+          <a
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={() => setOpen(false)}
             className="flex items-center justify-center py-3 mt-2"
             style={{ background: GRN, fontFamily: T.display, fontSize: "16px", fontWeight: 500, color: YLW }}
           >
             Book a Call →
-          </Link>
+          </a>
         </div>
       )}
     </nav>
