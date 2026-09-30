@@ -21,6 +21,7 @@ export const T = {
 const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "Explore Services", href: "/services" },
+  { label: "Work", href: "/work" },
   { label: "About", href: "/about" },
   { label: "Journal", href: "/journal" },
   { label: "Contact", href: "/contact" },

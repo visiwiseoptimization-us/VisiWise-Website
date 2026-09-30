@@ -6,6 +6,7 @@ import { ArticlePage } from "./components/ArticlePage";
 import { ServicesPage } from "./components/ServicesPage";
 import { AboutPage } from "./components/AboutPage";
 import { ContactPage } from "./components/ContactPage";
+import { WorkPage } from "./components/WorkPage";
 import { SiteNav, BOOKING_URL } from "./components/SiteNav";
 import { SiteFooter } from "./components/SiteFooter";
 import { ContactForm } from "./components/ContactForm";
@@ -17,6 +18,8 @@ import imgValuesSection from "../imports/UnnamedComponent/f91eaf332ee4a10ec058e6
 import imgArticle1 from "../imports/UnnamedComponent/bdb30674ad958933f85288ea31822252e1a378d0.png";
 import imgArticle2 from "../imports/UnnamedComponent/2b1a9f5d4045456ed370a4a05c8bf47cdc6d24e5.png";
 import imgArticle3 from "../imports/UnnamedComponent/92bc57b6c6836a6befe8825fe9548237096b97fe.png";
+import imgWorkLint from "../imports/work/lintaway-home.jpg";
+import imgWorkGmm from "../imports/work/gmm-home.jpg";
 
 // ─── Design tokens ────────────────────────────────────────────────────────────
 const GRN = "#104101";
@@ -459,6 +462,138 @@ function ServicesOverview() {
               </Link>
             </motion.div>
           ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Client Work (homepage preview) ───────────────────────────────────────────
+function ClientWork() {
+  const cases = [
+    {
+      img: imgWorkLint,
+      anchor: "lint-away-duct-cleaning",
+      client: "Lint Away Duct Cleaning",
+      meta: "Local service business · Phoenix, AZ",
+      desc: "A no-storefront business built to be found. New site on a fast modern stack, 50 city and service pages, full schema markup and AI-search readiness — every quote request lands straight in the owner's inbox.",
+      tags: ["Web design", "Development", "Local SEO", "AI search", "Content"]
+    },
+    {
+      img: imgWorkGmm,
+      anchor: "green-money-momentum",
+      client: "Green Money Momentum",
+      meta: "Creator platform · Investor education",
+      desc: "A YouTube market channel turned into a community platform: weekly investor notes, a real-time chat room with host and audience views, a live market ticker and a Chrome extension.",
+      tags: ["Product design", "Web app", "Real-time chat", "Browser extension"]
+    }
+  ];
+
+  return (
+    <section
+      id="work"
+      className="relative w-full py-20 md:py-28 px-6 md:px-10"
+    >
+      <div className="max-w-6xl mx-auto flex flex-col gap-12">
+        <SectionHeader
+          kicker="Client work"
+          heading="Work we've shipped."
+          sub="Two businesses we designed, built, and still manage today."
+        />
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewOpts}
+          variants={stagger}
+          className="grid md:grid-cols-2 gap-5"
+        >
+          {cases.map((c) => (
+            <motion.div
+              key={c.client}
+              variants={fadeUp}
+              className="flex flex-col gap-5 rounded-2xl bg-white overflow-hidden hover:-translate-y-1 transition-transform"
+              style={{ border: `1px solid ${BDR}` }}
+            >
+              <div className="w-full overflow-hidden" style={{ borderBottom: `1px solid ${BDR}` }}>
+                <img src={c.img} alt={`${c.client} website`} loading="lazy" className="w-full h-auto block" />
+              </div>
+              <div className="flex flex-col gap-4 px-8 pb-8">
+                <span
+                  style={{
+                    fontFamily: T.mono,
+                    fontSize: "12px",
+                    color: GRY,
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase"
+                  }}
+                >
+                  {c.meta}
+                </span>
+                <h3
+                  style={{
+                    fontFamily: T.display,
+                    fontWeight: 500,
+                    fontSize: "22px",
+                    color: GRN,
+                    letterSpacing: "-0.4px"
+                  }}
+                >
+                  {c.client}
+                </h3>
+                <p
+                  style={{
+                    fontFamily: T.serif,
+                    fontSize: "17px",
+                    color: GRY,
+                    lineHeight: 1.6,
+                    letterSpacing: "-0.02em",
+                    flex: 1
+                  }}
+                >
+                  {c.desc}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {c.tags.map((t) => (
+                    <span
+                      key={t}
+                      className="px-3 py-1.5 rounded-full"
+                      style={{
+                        border: `1px solid ${BDR}`,
+                        fontFamily: T.mono,
+                        fontSize: "12px",
+                        color: GRN
+                      }}
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+                <Link
+                  to={`/work#${c.anchor}`}
+                  className="flex items-center gap-1 hover:gap-2 transition-all"
+                  style={{
+                    fontFamily: T.mono,
+                    fontSize: "13px",
+                    fontWeight: 500,
+                    color: GRN
+                  }}
+                >
+                  Read the case study →
+                </Link>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewOpts}
+          variants={fadeUp}
+          className="flex justify-center"
+        >
+          <BtnOutline href="/work">See All Client Work</BtnOutline>
         </motion.div>
       </div>
     </section>
@@ -1296,6 +1431,7 @@ function HomePage() {
       <SiteNav home active="/" />
       <Hero />
       <ServicesOverview />
+      <ClientWork />
       <Pricing />
       <WhoWeServe />
       <ValuesSection />
@@ -1315,6 +1451,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/services" element={<ServicesPage />} />
+        <Route path="/work" element={<WorkPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/journal" element={<JournalPage />} />
