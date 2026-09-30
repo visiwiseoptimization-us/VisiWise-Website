@@ -4,3 +4,7 @@ dist/
 *.log
 .env
 .env.local
+
+# local build tarball — not source
+_build-src.tgz
+dist-ssr/

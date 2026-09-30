@@ -1,0 +1,44 @@
+# VisiWise Optimization LLC
+
+> VisiWise Optimization is a digital operations studio in Tempe, Arizona. It builds, manages and grows the digital presence of small and mid-sized service businesses: websites, local SEO, content, analytics and reporting, and the software that runs day-to-day operations.
+
+## Key facts
+
+- **Business type**: Digital media and marketing consultancy. Works remotely with clients across the Phoenix Valley and the United States.
+- **Founded**: 2026. Founder and CEO: Shambhavi Singh.
+- **Location**: Tempe, Arizona, United States.
+- **Website**: https://visiwiseoptimization.com
+- **Contact**: visiwiseoptimization@gmail.com
+- **Serves**: law firms, healthcare practices, real estate, financial services, construction and trades, consulting and coaching.
+- **How engagements work**: a one-time $299 starter build (website setup, Google Business Profile, social profile optimization, initial SEO configuration), then a flat monthly management plan on a four-month minimum term.
+
+## Services
+
+### Build
+Custom websites and digital assets designed around how a business actually operates — design, development, hosting and launch, delivered in house.
+
+### Manage
+Software and infrastructure that keeps operations organized and online: hosting, domains and DNS, project management tooling, ongoing site updates.
+
+### Grow
+SEO and marketing built to increase visibility and bring in qualified leads: local SEO and Google Business Profile, content and blog programs, social media management, email campaigns, LinkedIn outreach.
+
+### Optimize
+KPI analysis and plain-English reporting on traffic, keyword rankings, social reach and lead growth, so decisions are backed by data.
+
+## Client work
+
+### Lint Away Duct Cleaning (lintawayductcleaning.com)
+Air duct and dryer vent cleaning company serving eight Phoenix Valley cities. VisiWise redesigned the site, rebuilt it on Next.js, Supabase and Vercel, and added a 50-page city and service architecture, schema markup, an llms.txt file and a lead-capture quote form, plus a monthly SEO article program. The business has no storefront and no Google Maps listing, so geographic pages and structured data do the work a map pin normally would.
+
+### Green Money Momentum (greenmoneymomentum.com)
+A YouTube market-analysis channel. VisiWise built the community platform around it: weekly investor notes, a real-time chat room with separate host and audience interfaces, a live market ticker, a Chrome extension in beta, and a merch storefront.
+
+## Pages
+
+- https://visiwiseoptimization.com/ — overview and the Build / Manage / Grow / Optimize framework
+- https://visiwiseoptimization.com/services — service detail and pricing
+- https://visiwiseoptimization.com/work — client case studies
+- https://visiwiseoptimization.com/about — who VisiWise works with and how it operates
+- https://visiwiseoptimization.com/journal — articles on digital marketing for service businesses
+- https://visiwiseoptimization.com/contact — free 30-minute digital audit booking

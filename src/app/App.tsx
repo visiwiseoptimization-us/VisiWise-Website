@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { HashRouter, Routes, Route, Link } from "react-router";
+import { Routes, Route, Link } from "react-router";
 import { motion } from "motion/react";
 import { JournalPage } from "./components/JournalPage";
 import { ArticlePage } from "./components/ArticlePage";
@@ -1444,9 +1444,9 @@ function HomePage() {
 }
 
 // ─── App — router root ────────────────────────────────────────────────────────
-export default function App() {
+export function AppRoutes() {
   return (
-    <HashRouter>
+    <>
       <ScrollToHash />
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -1457,6 +1457,6 @@ export default function App() {
         <Route path="/journal" element={<JournalPage />} />
         <Route path="/journal/:slug" element={<ArticlePage />} />
       </Routes>
-    </HashRouter>
+    </>
   );
 }

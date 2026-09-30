@@ -1,0 +1,15 @@
+# VisiWise Optimization LLC — https://visiwiseoptimization.com
+User-agent: *
+Allow: /
+
+# AI answer engines are welcome to read and cite this site.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://visiwiseoptimization.com/sitemap.xml
