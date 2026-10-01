@@ -1302,7 +1302,7 @@ function Contact() {
               <div style={{ flex: 1, height: "1px", background: BDR }} />
             </div>
             <a
-              href="mailto:visiwiseoptimization@gmail.com"
+              href="mailto:info@visiwiseoptimization.com"
               style={{
                 fontFamily: T.mono,
                 fontSize: "14px",
@@ -1310,7 +1310,7 @@ function Contact() {
                 textDecoration: "underline"
               }}
             >
-              visiwiseoptimization@gmail.com
+              info@visiwiseoptimization.com
             </a>
           </motion.div>
 
@@ -1320,6 +1320,31 @@ function Contact() {
             className="flex flex-col gap-5 p-8 rounded-2xl bg-white"
             style={{ border: `1px solid ${BDR}` }}
           >
+            <div className="flex flex-col gap-2">
+              <h3
+                style={{
+                  fontFamily: T.display,
+                  fontWeight: 500,
+                  fontSize: "22px",
+                  color: GRN,
+                  letterSpacing: "-0.4px"
+                }}
+              >
+                Or write to us instead.
+              </h3>
+              <p
+                style={{
+                  fontFamily: T.serif,
+                  fontSize: "16px",
+                  color: GRY,
+                  lineHeight: 1.55,
+                  letterSpacing: "-0.02em"
+                }}
+              >
+                For questions, quotes, partnerships, or anything that isn't a
+                call. We reply within one business day.
+              </p>
+            </div>
             <ContactForm />
           </motion.div>
         </motion.div>
@@ -1336,23 +1361,30 @@ function Contact() {
             {
               icon: <IconEmail />,
               label: "Email",
-              value: "visiwiseoptimization@gmail.com"
+              value: "info@visiwiseoptimization.com",
+              href: "mailto:info@visiwiseoptimization.com"
             },
             {
               icon: <IconLinkedIn />,
               label: "LinkedIn",
-              value: "linkedin.com/company/visiwise"
+              value: "linkedin.com/company/visiwise-optimization-llc",
+              href: "https://www.linkedin.com/company/visiwise-optimization-llc/"
             },
             {
               icon: <IconInstagram />,
               label: "Instagram",
-              value: "@visiwise.optimization"
+              value: "@visiwise.optimization",
+              href: "https://www.instagram.com/visiwise.optimization"
             }
           ].map((tile) => (
-            <motion.div
+            <motion.a
               key={tile.label}
+              href={tile.href}
+              {...(tile.href.startsWith("http")
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
               variants={fadeUp}
-              className="flex flex-col gap-2 p-5 rounded-xl bg-white"
+              className="flex flex-col gap-2 p-5 rounded-xl bg-white hover:-translate-y-0.5 transition-transform"
               style={{ border: `1px solid ${BDR}` }}
             >
               {tile.icon}
@@ -1377,7 +1409,7 @@ function Contact() {
               >
                 {tile.value}
               </span>
-            </motion.div>
+            </motion.a>
           ))}
         </motion.div>
       </div>

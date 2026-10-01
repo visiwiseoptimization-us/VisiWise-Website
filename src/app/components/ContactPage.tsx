@@ -98,13 +98,21 @@ export function ContactPage() {
                 <span style={{ fontFamily: T.serif, fontSize: "14px", color: GRY }}>or send a message to</span>
                 <div style={{ flex: 1, height: "1px", background: BDR }} />
               </div>
-              <a href="mailto:visiwiseoptimization@gmail.com" style={{ fontFamily: T.mono, fontSize: "14px", color: GRN, textDecoration: "underline" }}>
-                visiwiseoptimization@gmail.com
+              <a href="mailto:info@visiwiseoptimization.com" style={{ fontFamily: T.mono, fontSize: "14px", color: GRN, textDecoration: "underline" }}>
+                info@visiwiseoptimization.com
               </a>
             </motion.div>
 
             {/* Right — form */}
             <motion.div variants={fadeUp} className="flex flex-col gap-5 p-8 rounded-2xl bg-white" style={{ border: `1px solid ${BDR}` }}>
+              <div className="flex flex-col gap-2">
+                <h3 style={{ fontFamily: T.display, fontWeight: 500, fontSize: "22px", color: GRN, letterSpacing: "-0.4px" }}>
+                  Or write to us instead.
+                </h3>
+                <p style={{ fontFamily: T.serif, fontSize: "16px", color: GRY, lineHeight: 1.55, letterSpacing: "-0.02em" }}>
+                  For questions, quotes, partnerships, or anything that isn't a call. We reply within one business day.
+                </p>
+              </div>
               <ContactForm />
             </motion.div>
           </motion.div>
@@ -113,15 +121,16 @@ export function ContactPage() {
           <motion.div initial="hidden" whileInView="visible" viewport={viewOpts} variants={stagger}
             className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto w-full">
             {[
-              { icon: <IconEmail />, label: "Email", value: "visiwiseoptimization@gmail.com" },
-              { icon: <IconLinkedIn />, label: "LinkedIn", value: "linkedin.com/company/visiwise" },
-              { icon: <IconInstagram />, label: "Instagram", value: "@visiwise.optimization" },
+              { icon: <IconEmail />, label: "Email", value: "info@visiwiseoptimization.com", href: "mailto:info@visiwiseoptimization.com" },
+              { icon: <IconLinkedIn />, label: "LinkedIn", value: "linkedin.com/company/visiwise-optimization-llc", href: "https://www.linkedin.com/company/visiwise-optimization-llc/" },
+              { icon: <IconInstagram />, label: "Instagram", value: "@visiwise.optimization", href: "https://www.instagram.com/visiwise.optimization" },
             ].map((tile) => (
-              <motion.div key={tile.label} variants={fadeUp} className="flex flex-col gap-2 p-5 rounded-xl bg-white" style={{ border: `1px solid ${BDR}` }}>
+              <motion.a key={tile.label} href={tile.href} {...(tile.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                variants={fadeUp} className="flex flex-col gap-2 p-5 rounded-xl bg-white hover:-translate-y-0.5 transition-transform" style={{ border: `1px solid ${BDR}` }}>
                 {tile.icon}
                 <span style={{ fontFamily: T.mono, fontSize: "11px", color: GRY, letterSpacing: "0.08em", textTransform: "uppercase" }}>{tile.label}</span>
                 <span style={{ fontFamily: T.serif, fontSize: "14px", color: GRN, lineHeight: 1.5 }}>{tile.value}</span>
-              </motion.div>
+              </motion.a>
             ))}
           </motion.div>
         </div>

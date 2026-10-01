@@ -6,7 +6,7 @@ import { GRN, GRY, BDR, T } from "./SiteNav";
 // 2. Create a new form and copy its endpoint — it looks like
 //    "https://formspree.io/f/abcd1234".
 // 3. Paste it below in place of the placeholder.
-// Once set, submissions here email visiwiseoptimization@gmail.com AND
+// Once set, submissions here email info@visiwiseoptimization.com AND
 // Formspree auto-sends the visitor a confirmation if "email" field is present.
 export const FORMSPREE_ENDPOINT = "https://formspree.io/f/xzdnpbpl";
 
@@ -49,7 +49,7 @@ export function ContactForm() {
     if (notConfigured) {
       // Formspree endpoint hasn't been set up yet — fall back to a mailto so
       // the message still reaches us, and let the visitor know.
-      window.location.href = `mailto:visiwiseoptimization@gmail.com?subject=${encodeURIComponent(
+      window.location.href = `mailto:info@visiwiseoptimization.com?subject=${encodeURIComponent(
         `New inquiry from ${form.name || "website visitor"}`
       )}&body=${encodeURIComponent(
         `Name: ${form.name}\nBusiness: ${form.business}\nEmail: ${form.email}\nPhone: ${form.phone}\nBusiness type: ${form.businessType}\nLooking to improve: ${form.improve.join(", ")}\n\n${form.message}`
