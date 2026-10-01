@@ -77,5 +77,6 @@ export function applyMeta(title: string, description: string) {
     canonical.setAttribute("rel", "canonical");
     document.head.appendChild(canonical);
   }
-  canonical.setAttribute("href", SITE_URL + window.location.pathname);
+  const p = window.location.pathname;
+  canonical.setAttribute("href", SITE_URL + (p === "/" || p.endsWith("/") ? p : `${p}/`));
 }

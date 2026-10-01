@@ -20,6 +20,14 @@ const SSR_ENTRY = path.join(ROOT, "dist-ssr", "entry-server.js");
 const SITE_URL = "https://visiwiseoptimization.com";
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
+/**
+ * GitHub Pages serves every directory at its trailing-slash URL and 301s the
+ * slashless form to it, so that is the address we declare everywhere: canonical,
+ * og:url, breadcrumbs, Article @id and the sitemap. A canonical pointing at a
+ * URL that redirects is a self-inflicted crawl problem.
+ */
+const canonicalUrl = (p) => SITE_URL + (p === "/" ? "/" : `${p}/`);
+
 const esc = (s) =>
   String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
@@ -29,7 +37,7 @@ function setTag(html, pattern, replacement) {
 }
 
 function applyHead(template, route) {
-  const url = SITE_URL + (route.path === "/" ? "/" : route.path);
+  const url = canonicalUrl(route.path);
   const title = esc(route.title);
   const desc = esc(route.description);
 
@@ -83,13 +91,13 @@ function applyHead(template, route) {
 function breadcrumbLd(route) {
   if (route.path === "/") return "";
   const parts = route.path.split("/").filter(Boolean);
-  const items = [{ name: "Home", url: SITE_URL + "/" }];
+  const items = [{ name: "Home", url: canonicalUrl("/") }];
   let acc = "";
   for (const part of parts) {
     acc += `/${part}`;
     items.push({
       name: part.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
-      url: SITE_URL + acc,
+      url: canonicalUrl(acc),
     });
   }
   const ld = {
@@ -107,7 +115,7 @@ function breadcrumbLd(route) {
 
 function articleLd(route) {
   if (!route.article) return "";
-  const url = SITE_URL + route.path;
+  const url = canonicalUrl(route.path);
   const blocks = [
     {
       "@context": "https://schema.org",
@@ -174,7 +182,7 @@ async function main() {
   const urls = list
     .map(
       (r) =>
-        `  <url>\n    <loc>${SITE_URL}${r.path === "/" ? "/" : r.path}</loc>\n    <lastmod>${r.lastmod ?? today}</lastmod>\n    <changefreq>${r.path === "/" ? "weekly" : "monthly"}</changefreq>\n    <priority>${r.priority}</priority>\n  </url>`
+        `  <url>\n    <loc>${canonicalUrl(r.path)}</loc>\n    <lastmod>${r.lastmod ?? today}</lastmod>\n    <changefreq>${r.path === "/" ? "weekly" : "monthly"}</changefreq>\n    <priority>${r.priority}</priority>\n  </url>`
     )
     .join("\n");
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
