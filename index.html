@@ -95,6 +95,24 @@
       })();
     </script>
 
+    <!-- Analytics. Paste the GA4 Measurement ID (looks like G-XXXXXXXXXX) between
+         the quotes below to switch tracking on. Empty = no tracking, no requests. -->
+    <script>
+      window.VISIWISE_GA_ID = "";
+      (function () {
+        var id = window.VISIWISE_GA_ID;
+        if (!id) return;
+        var s = document.createElement("script");
+        s.async = true;
+        s.src = "https://www.googletagmanager.com/gtag/js?id=" + id;
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () { window.dataLayer.push(arguments); };
+        window.gtag("js", new Date());
+        window.gtag("config", id, { send_page_view: true });
+      })();
+    </script>
+
   </head>
   <body>
 

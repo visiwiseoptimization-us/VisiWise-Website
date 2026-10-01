@@ -11,6 +11,7 @@ import { SiteNav, BOOKING_URL } from "./components/SiteNav";
 import { SiteFooter } from "./components/SiteFooter";
 import { ContactForm } from "./components/ContactForm";
 import { ScrollToHash } from "./components/hash/ScrollToHash";
+import { Analytics } from "./components/Analytics";
 
 // Figma assets
 import svgPaths from "../imports/UnnamedComponent/svg-7nkmr6yfuj";
@@ -1448,6 +1449,7 @@ export function AppRoutes() {
   return (
     <>
       <ScrollToHash />
+      <Analytics />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/services" element={<ServicesPage />} />

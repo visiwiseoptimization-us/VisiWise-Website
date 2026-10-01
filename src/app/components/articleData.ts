@@ -12,6 +12,8 @@ export interface Article {
   sections: { heading: string; body: string }[];
   keyTakeaways: string[];
   faqs: { q: string; a: string }[];
+  /** Short title for search results (<= 60 chars). Falls back to `title`. */
+  seoTitle?: string;
   metaDescription: string;
   relatedSlugs: string[];
 }
@@ -20,6 +22,7 @@ export const ARTICLES: Article[] = [
   {
     id: "01",
     slug: "small-business-online-visibility",
+    seoTitle: "Why Small Businesses Struggle to Get Clients Online",
     title: "Why 55% of Small Businesses Struggle to Get Clients Online — And What Actually Works",
     category: "Strategy",
     readTime: "7 min",
@@ -70,6 +73,7 @@ export const ARTICLES: Article[] = [
   {
     id: "02",
     slug: "digital-tools-service-business",
+    seoTitle: "The 6 Digital Tools Every Service Business Needs",
     title: "The 6 Digital Tools Every Service Business Actually Needs",
     category: "Tools",
     readTime: "5 min",
@@ -105,6 +109,7 @@ export const ARTICLES: Article[] = [
   {
     id: "03",
     slug: "website-costing-you-clients",
+    seoTitle: "What a Weak Website Costs You Every Month",
     title: "What Your Website Is Costing You Every Month (Even If It Looks Fine)",
     category: "Marketing",
     readTime: "6 min",
@@ -139,6 +144,7 @@ export const ARTICLES: Article[] = [
   {
     id: "04",
     slug: "linkedin-automation-service-businesses",
+    seoTitle: "LinkedIn for Service Businesses: A 2026 Guide",
     title: "LinkedIn for Service Businesses: A Practical Automation Guide for 2026",
     category: "Marketing",
     readTime: "8 min",
@@ -146,7 +152,7 @@ export const ARTICLES: Article[] = [
     datePublished: "2025-04-15",
     teaser: "LinkedIn has the highest B2B lead-to-client conversion rate of any social platform. Here's how to use it.",
     tldr: "LinkedIn works for service businesses because your clients are already there making professional decisions. The key is consistent content (4–8 posts/month) combined with targeted connection sequences — not cold pitching, but value-first outreach that builds trust before the ask.",
-    metaDescription: "LinkedIn has the highest B2B lead-to-client conversion rate of any social platform. Here's how service businesses set up content and automation to book more calls.",
+    metaDescription: "LinkedIn has the highest B2B lead-to-client conversion rate of any social platform. How service businesses set up content and automation to book calls.",
     relatedSlugs: ["digital-tools-service-business", "small-business-online-visibility"],
     sections: [
       { heading: "Why LinkedIn Outperforms Every Other Platform for Service Businesses", body: "LinkedIn has a lead-to-client conversion rate of 2.74% — nearly 3x higher than Facebook or X. For service businesses targeting other professionals or companies, this isn't a coincidence: LinkedIn users are in a professional mindset when they browse, making them far more receptive to service-oriented content than users scrolling Instagram for entertainment." },
@@ -174,6 +180,7 @@ export const ARTICLES: Article[] = [
   {
     id: "05",
     slug: "how-to-choose-digital-marketing-agency",
+    seoTitle: "How to Choose a Digital Marketing Agency",
     title: "How to Choose a Digital Marketing Agency Without Getting Burned",
     category: "Strategy",
     readTime: "5 min",
@@ -181,7 +188,7 @@ export const ARTICLES: Article[] = [
     datePublished: "2025-04-01",
     teaser: "Red flags, green flags, and the five questions to ask before you sign anything.",
     tldr: "The biggest red flags in a digital agency are vague deliverables, long lock-in contracts, no reporting, outsourced work, and guarantees that sound too good. The best agencies give you fixed-scope work, flat monthly pricing, and plain-English reports every month.",
-    metaDescription: "Most service businesses get burned by digital agencies at least once. Here are the red flags, the green flags, and the 5 questions to ask before signing anything.",
+    metaDescription: "Most service businesses get burned by an agency at least once. The red flags, the green flags, and the 5 questions to ask before signing.",
     relatedSlugs: ["cost-of-diy-digital-marketing", "small-business-online-visibility"],
     sections: [
       { heading: "Why So Many Business Owners Have Been Burned by Agencies", body: "The digital marketing industry has a trust problem. Long contracts, vague deliverables, and reports full of metrics that don't connect to revenue have made many business owners deeply skeptical — and rightfully so. The good news: the red flags are consistent and easy to spot before you sign anything." },
@@ -208,6 +215,7 @@ export const ARTICLES: Article[] = [
   {
     id: "06",
     slug: "local-seo-service-businesses",
+    seoTitle: "Local SEO for Service Businesses: What Works",
     title: "SEO for Local Service Businesses: What Actually Moves the Needle",
     category: "SEO",
     readTime: "7 min",
@@ -215,7 +223,7 @@ export const ARTICLES: Article[] = [
     datePublished: "2025-03-15",
     teaser: "Four things ranked by impact — and exactly how long each one takes to show results.",
     tldr: "For local service businesses, Google Business Profile optimization delivers the fastest SEO results. After that, consistent reviews, accurate NAP citations, and location-specific service pages compound your visibility over 60–90 days.",
-    metaDescription: "Local SEO for service businesses comes down to four things: Google Business Profile, local citations, review velocity, and on-page content. Here's how to prioritize by impact.",
+    metaDescription: "Local SEO comes down to four things: Google Business Profile, citations, review velocity, and on-page content. How to prioritize by impact.",
     relatedSlugs: ["website-costing-you-clients", "small-business-online-visibility"],
     sections: [
       { heading: "Why Local SEO Is Different from Regular SEO", body: "National SEO is a competition against every website on the internet for a keyword. Local SEO is a competition against the 10–20 businesses in your geographic area for service searches with local intent. The rules are different: proximity, review count, GBP completeness, and local citations matter far more than domain authority or backlinks." },
@@ -244,6 +252,7 @@ export const ARTICLES: Article[] = [
   {
     id: "07",
     slug: "cost-of-diy-digital-marketing",
+    seoTitle: "The Real Cost of DIY Digital Marketing",
     title: "The Real Cost of DIY Digital Marketing for Service Businesses",
     category: "Industry",
     readTime: "6 min",
@@ -251,7 +260,7 @@ export const ARTICLES: Article[] = [
     datePublished: "2025-03-01",
     teaser: "The real cost isn't the software subscription. It's 6–12 hours of your time, every week.",
     tldr: "The real cost of DIY digital marketing isn't the software subscription — it's 6–12 hours of your time every week, applied to a skill set outside your expertise. For most service business owners, that time is worth more than what they'd pay an agency to do it better.",
-    metaDescription: "Business owners who manage their own digital marketing spend an average of 6–12 hours per week on it. Here's the real cost — and when outsourcing makes financial sense.",
+    metaDescription: "Owners who run their own digital marketing spend 6–12 hours a week on it. The real cost — and when outsourcing makes financial sense.",
     relatedSlugs: ["how-to-choose-digital-marketing-agency", "digital-tools-service-business"],
     sections: [
       { heading: "What 'DIY Digital Marketing' Actually Costs (It's Not Just Your Time)", body: "When business owners tally the cost of managing their own marketing, they usually count the software subscriptions — $15/month for Canva, $50/month for a scheduler, maybe $100/month for an email tool. That's $165/month. But the actual cost includes the 6–12 hours per week spent on content creation, scheduling, monitoring, and reporting — time that isn't going toward billable client work." },

@@ -31,7 +31,7 @@ export function routes(): PrerenderRoute[] {
 
   const articles: PrerenderRoute[] = ARTICLES.map((a) => ({
     path: `/journal/${a.slug}`,
-    title: `${a.title} — VisiWise Journal`,
+    title: a.seoTitle ?? `${a.title} — VisiWise Journal`,
     description: a.metaDescription,
     priority: "0.7",
     lastmod: a.datePublished,

@@ -16,15 +16,15 @@ export type PageMeta = {
 export const PAGES: PageMeta[] = [
   {
     path: "/",
-    title: "VisiWise Optimization | Digital Operations for Service Businesses in Tempe, AZ",
+    title: "Digital Operations for Service Businesses | Tempe, AZ",
     description:
-      "VisiWise Optimization builds, manages and grows the digital presence of service businesses — websites, local SEO, reporting and software. Based in Tempe, Arizona.",
+      "VisiWise builds, manages and grows the digital presence of service businesses: websites, local SEO, reporting and software. Based in Tempe, Arizona.",
   },
   {
     path: "/services",
-    title: "Services — Web, SEO, Marketing & Reporting | VisiWise Optimization",
+    title: "Web, SEO, Marketing & Reporting Services | VisiWise",
     description:
-      "Website design and development, full digital marketing, analytics and reporting, and software setup for service businesses. Flat monthly plans, no agency retainers.",
+      "Website design and development, digital marketing, analytics and reporting, and software setup for service businesses. Flat monthly plans.",
   },
   {
     path: "/work",
@@ -34,21 +34,21 @@ export const PAGES: PageMeta[] = [
   },
   {
     path: "/about",
-    title: "About — Built for Service Businesses | VisiWise Optimization",
+    title: "About VisiWise Optimization | Tempe, Arizona",
     description:
-      "VisiWise Optimization is a Tempe, Arizona digital operations studio for service businesses. One accountable team for design, development, SEO and reporting.",
+      "A Tempe, Arizona digital operations studio for service businesses. One accountable team for design, development, SEO and reporting.",
   },
   {
     path: "/journal",
-    title: "The VisiWise Journal — Digital Marketing Insights for Service Businesses",
+    title: "The VisiWise Journal | Marketing for Service Businesses",
     description:
       "Practical guides on local SEO, websites, digital tools and marketing spend for small service businesses. No fluff, no jargon.",
   },
   {
     path: "/contact",
-    title: "Contact — Book a Free Digital Audit | VisiWise Optimization",
+    title: "Contact VisiWise | Book a Free Digital Audit",
     description:
-      "Book a free 30-minute digital audit with VisiWise Optimization. We review your website, SEO and social presence live and tell you what to fix first.",
+      "Book a free 30-minute digital audit. We review your website, SEO and social presence live and tell you what to fix first.",
   },
 ];
 
